@@ -33,4 +33,23 @@ describe('ContaController', () => {
     expect(next.firstCall.args[0]).to.be.an('error');
     expect(next.firstCall.args[0].message).to.equal('Conta não encontrada');
   });
+
+  it('deve retornar 404 se service retornar null', async () => {
+    const req = { params: { id: 123 } };
+    const res = mockResponse();
+    sinon.stub(contaService, 'getContaById').resolves(null);
+    await contaController.getConta(req, res);
+    expect(res.status.calledWith(404)).to.be.true;
+    expect(res.json.calledWith({ erro: 'Conta não encontrada' })).to.be.true;
+  });
+
+  it('deve tratar erro inesperado do service', async () => {
+    const req = { params: { id: 2 } };
+    const res = mockResponse();
+    const next = sinon.stub();
+    sinon.stub(contaService, 'getContaById').throws(new Error('Erro inesperado'));
+    await contaController.getConta(req, res, next);
+    expect(next.calledOnce).to.be.true;
+    expect(next.firstCall.args[0].message).to.equal('Erro inesperado');
+  });
 });
