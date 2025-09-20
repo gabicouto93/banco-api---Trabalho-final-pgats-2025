@@ -1,12 +1,58 @@
-
 # Banco API - Documentação
+
+> **Este projeto foi desenvolvido para trabalho final da disciplina de API da pós-graduação em Automação de Teste de Software.**
 
 ## Visão Geral
 
-O projeto é composto por duas APIs independentes que oferecem suporte a operações financeiras, com uma arquitetura baseada em REST e GraphQL.
+Este projeto é uma API de banco digital moderna, com arquitetura REST e GraphQL, autenticação JWT, operações de contas e transferências, e foco em qualidade de código e testes automatizados. O repositório já está pronto para integração contínua (CI/CD) no GitHub Actions, com pipeline de testes robusta e relatórios automáticos.
 
-- **API REST**: Roda na porta `3000` e gerencia endpoints de contas e transferências.
-- **API GraphQL**: Roda na porta `3001` e fornece operações para consultas e mutações no domínio financeiro.
+- **API REST**: Porta `3000` — endpoints de contas, login e transferências.
+- **API GraphQL**: Porta `3001` — queries e mutations para operações bancárias.
+- **Testes Automatizados**: Cobertura unitária e de integração (REST e GraphQL), com mocks para garantir independência de infraestrutura externa.
+- **Pipeline CI/CD**: Workflow GitHub Actions executa testes automaticamente a cada push/pull request.
+
+---
+
+## Testes Automatizados e Pipeline CI/CD
+
+O projeto possui uma pipeline de testes automatizados completa, garantindo qualidade e estabilidade do código em cada alteração.
+
+### Ferramentas Utilizadas
+- **Mocha**: Framework de testes.
+- **Chai**: Biblioteca de asserções.
+- **Supertest**: Testes de integração HTTP (REST e GraphQL).
+- **Sinon**: Mocks e stubs para isolamento de dependências.
+- **Mochawesome**: Geração de relatórios HTML/JSON dos testes.
+- **GitHub Actions**: Execução automática dos testes no CI/CD.
+
+### Tipos de Testes
+- **Unitários**: Cobrem controllers e services, com mocks dos serviços e banco de dados.
+- **Integração REST**: Simulam requisições HTTP reais, com autenticação JWT e respostas mockadas.
+- **Integração GraphQL**: Testam queries e mutations usando ApolloServer Express, com schema e resolvers mockados.
+- **Cobertura de erros, autenticação, múltiplos cenários e respostas inválidas.**
+
+### Como Executar os Testes Localmente
+
+1. Instale as dependências:
+   ```bash
+   npm install
+   ```
+2. Execute todos os testes:
+   ```bash
+   npm test
+   ```
+3. O relatório será gerado automaticamente em `mochawesome-report/index.html`. Basta abrir esse arquivo no navegador para visualizar o resultado detalhado.
+
+### Como Executar os Testes no GitHub (CI/CD)
+- Basta fazer push ou pull request para o repositório. O workflow `.github/workflows/nodejs.yml` executa `npm install` e `npm test` automaticamente.
+- O status dos testes pode ser acompanhado na aba **Actions** do GitHub.
+- Para rodar manualmente, clique em **Actions > Node.js CI > Run workflow**.
+
+### Observações Importantes
+- Todos os testes são mockados: não dependem de banco de dados real ou serviços externos.
+- O ambiente de testes é estável e reproduzível localmente e no CI.
+- O relatório Mochawesome facilita a análise visual dos resultados.
+- O projeto segue boas práticas de versionamento: não versiona `node_modules` nem relatórios gerados.
 
 ---
 
