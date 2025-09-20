@@ -21,6 +21,10 @@ app.use('/contas', contaRoutes);
 
 app.use(gerenciarErros);
 
-app.listen(process.env.PORT, () => {
-    console.log(`Servidor rodando na porta ${process.env.PORT}`);
-});
+if (require.main === module) {
+  app.listen(process.env.PORT || 3000, () => {
+    console.log(`Servidor rodando na porta ${process.env.PORT || 3000}`);
+  });
+}
+
+module.exports = app;
